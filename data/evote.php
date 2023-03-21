@@ -357,7 +357,7 @@ class Evote {
             $opt = mysqli_real_escape_string($conn, $opt);
             $sql2 .= "(\"$last_id\",\"$opt\", 0),";
         }
-        $sql2 .= "(\"$last_id\",\"-Blank-\" , 0)";
+        $sql2 .= "(\"$last_id\",\"Против всех\" , 0)";
         if ($conn->query($sql2) === TRUE) {
                 echo "Database created successfully";
         } else {
