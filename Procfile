@@ -1,1 +1,1 @@
-web: heroku-php-nginx -C nginx_app.conf evote-heroku/
+web: heroku-php-nginx -C nginx_app.conf /
