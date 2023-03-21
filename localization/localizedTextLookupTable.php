@@ -192,8 +192,8 @@ define("LOCALIZED_TEXT_LOOKUP_TABLE", array(
         "scanian"=>"Вы можете проголосовать за <b>",
     ),
     "</b> of the alternatives"=>array(
-        "sv"=>"</b> кандидатов либо "Против всех"",
-        "scanian"=>"</b> кандидатов либо "Против всех"",
+        "sv"=>"</b> кандидатов либо ",
+        "scanian"=>"</b> кандидатов либо",
     ),
     // end of iffy things (for now)
     "Personal code:"=>array(
