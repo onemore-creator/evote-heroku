@@ -96,6 +96,7 @@ if(!$evote->ongoingSession()){
 							checkboxes[i].disabled = false;
 							if(checkboxes[i].checked == false && countChecked >= max && checkboxes[i].id != 1 || checkboxes[checkboxes.length - 1].checked == true){
 								checkboxes[i].disabled = true;
+								checkboxes[checkboxes.length - 1].disabled = false;
 							}
 						}
 
