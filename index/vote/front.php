@@ -67,10 +67,10 @@ if(!$evote->ongoingSession()){
 						echo "<div class=\"panel panel-default\">";
 	    	        	echo "<table class=\"table table\" id=\"contentTable\">";
                         while($row = $res->fetch_assoc()){
-                                if($head != $row["e_name"]){
-	    	        	        echo "<tr class=\"rowheader\";><th colspan=\"2\">".$row["e_name"]."</th></tr>";
-                                $head = $row["e_name"];
-                                                }
+                                if($head != $row["e_name"]) {
+	    	        	        	echo "<tr class=\"rowheader\";><th colspan=\"2\">".$row["e_name"]."</th></tr>";
+                                	$head = $row["e_name"];
+								}
 	    	        			echo "<tr class=\"alternative\" style=\"cursor: pointer;\">
 									<td class=\"col-md-1 col-xs-1\">
 									<input type=$type class=\"big\" name=\"person[]\" style=\"cursor: pointer;\" id=$id value=".$row["id"]." onclick=\"maxCheck()\"></td>
@@ -86,18 +86,16 @@ if(!$evote->ongoingSession()){
 
     					var checkboxes = document.getElementsByName("person[]");
 						var countChecked = 0;
-						
-						if (checkboxes[checkboxes.length - 1] == false) {
-							for(var i = 0; i<checkboxes.length; i++){
-								if(checkboxes[i].checked == true){
-									countChecked++;
-								}
+					
+						for(var i = 0; i<checkboxes.length; i++){
+							if(checkboxes[i].checked == true){
+								countChecked++;
 							}
-							for(var i = 0; i<checkboxes.length; i++){
-								checkboxes[i].disabled = false;
-								if(checkboxes[i].checked == false && countChecked >= max && checkboxes[i].id != 1){
-									checkboxes[i].disabled = true;
-								}
+						}
+						for(var i = 0; i<checkboxes.length; i++){
+							checkboxes[i].disabled = false;
+							if(checkboxes[i].checked == false && countChecked >= max && checkboxes[i].id != 1 || checkboxes[checkboxes.length - 1].checked == true){
+								checkboxes[i].disabled = true;
 							}
 						}
 
