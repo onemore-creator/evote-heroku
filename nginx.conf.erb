@@ -32,7 +32,7 @@ http {
 	}
 
    server {
-        listen <%= ENV["PORT"] %>;
+        listen ${PORT};
         server_name _;
         access_log  /<path to logs>/access.log;
         error_log  /<path to logs>/error.log;
