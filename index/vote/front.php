@@ -86,18 +86,20 @@ if(!$evote->ongoingSession()){
 
     					var checkboxes = document.getElementsByName("person[]");
 						var countChecked = 0;
-						for(var i = 0; i<checkboxes.length; i++){
-							if(checkboxes[i].checked == true){
-								countChecked++;
+						
+						if (checkboxes[checkboxes.length - 1] == false) {
+							for(var i = 0; i<checkboxes.length; i++){
+								if(checkboxes[i].checked == true){
+									countChecked++;
+								}
+							}
+							for(var i = 0; i<checkboxes.length; i++){
+								checkboxes[i].disabled = false;
+								if(checkboxes[i].checked == false && countChecked >= max && checkboxes[i].id != 1){
+									checkboxes[i].disabled = true;
+								}
 							}
 						}
-						for(var i = 0; i<checkboxes.length; i++){
-							checkboxes[i].disabled = false;
-							if(checkboxes[i].checked == false && countChecked >= max && checkboxes[i].id != 1){
-								checkboxes[i].disabled = true;
-							}
-						}
-
 
 					}
 					</script>
