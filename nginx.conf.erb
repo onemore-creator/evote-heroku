@@ -1,0 +1,56 @@
+daemon off;
+# Heroku dynos have at least 4 cores.
+worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
+
+events {
+	use epoll;
+	accept_mutex on;
+	worker_connections <%= ENV['NGINX_WORKER_CONNECTIONS'] || 1024 %>;
+}
+
+http {
+	gzip on;
+	gzip_comp_level 2;
+	gzip_min_length 512;
+	gzip_proxied any; # Heroku router sends Via header
+
+	server_tokens off;
+
+	log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+	access_log <%= ENV['NGINX_ACCESS_LOG_PATH'] || 'logs/nginx/access.log' %> l2met;
+	error_log <%= ENV['NGINX_ERROR_LOG_PATH'] || 'logs/nginx/error.log' %>;
+
+	include mime.types;
+	default_type application/octet-stream;
+	sendfile on;
+
+	# Must read the body in 5 seconds.
+	client_body_timeout 5;
+
+	upstream app_server {
+		server unix:/tmp/nginx.socket fail_timeout=0;
+	}
+
+   server {
+      listen   80;
+      server_name evote.<your domain name>;
+      access_log  /<path to logs>/access.log;
+      error_log  /<path to logs>/error.log;
+      root   /<path to source code>;
+      index  index.html index.php;
+
+      location ~ \.php$ {
+              include php.conf;
+      }
+
+      location / {
+              try_files $uri @evote;
+      }
+
+      # Always rewrite to index.php
+      location @evote {
+          rewrite ^(.*)$  /index.php$1    break;
+          include php.conf;
+      }
+   }
+}
